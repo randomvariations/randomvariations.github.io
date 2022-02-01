@@ -1,0 +1,39 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>nikiml's Antenna pages - Geometry viewer</title>
+        <meta name="author" content="Nikolay Mladenov"/>
+        <meta name="description" content="view geometry from the url"/>
+	<!-- Framework CSS -->
+	<link rel="stylesheet" href="../blueprint/all_screen.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="../blueprint/print.css" type="text/css" media="print"/>
+	<!--[if lt IE 8]><link rel="stylesheet" href="../blueprint/ie.css" type="text/css" media="screen, projection"/><![endif]-->
+</head>
+<body>
+<script src="../js/sylvester-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/raphael-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/g.raphael-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/g.line-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/array-augment-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/antenna-model-viewer-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/nec-viewer-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/antenna-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/cviewer.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/color_to_hex.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/menu.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/viewer-menu.js" type="text/javascript" charset="utf-8"></script>
+<script>
+this.getClientWidth = NecViewer.getClientWidth;
+this.getClientHeight = NecViewer.getClientHeight;
+onViewerLoad("client"
+	, function(w)
+	{
+		w = w || NecViewer.getClientWidth();
+		var h = NecViewer.getClientHeight(), w1 = w/2; 
+		if(h > w1 && h < 1.5*w1)
+			w1 = h;
+		NecViewer.geometryViewer(w1);chartViewer(w-w1); 
+	}, NecViewer);
+</script>
+</body>
+</html>

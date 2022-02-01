@@ -1,0 +1,91 @@
+/* -----------------------------------------------------------------------
+
+
+Tabs Plugin 0.2 for the Blueprint CSS Framework
+http://blueprintcss.org
+
+* Copyright (c) 2008-Present. Refer to the main Blueprint license.
+* See README for instructions on how to use this plugin.
+* For credits and origins, see AUTHORS.
+
+----------------------------------------------------------------------- */
+
+.tabs {
+border-bottom:1px solid #ccc;
+height:auto;
+margin:0 0 .5em 0;
+overflow:auto;
+padding-left:0;
+}
+* html .tabs { height:1%; /* fixing IE 6 */ }
+.tabs li {
+  border:1px solid #ccc;
+  border-bottom:none;
+  float:left;
+  line-height:1.25;
+  list-style-type:none;
+  margin:0 .05em 0 0;
+  padding:0;
+}
+.tabs li a,.tabs li span {
+background:#ddd;
+  border:1px solid #eee;
+  border-bottom:none;
+  color:#222;
+  cursor:pointer;
+  display:block;
+  float:left;
+  font-weight:bold;
+  padding:.05em .13em .05em .13em;
+}
+.tabs li a.selected,.tabs li span.selected {
+  background:#666;
+  border:1px solid #666;
+  border-bottom:none;
+  color:#fff;
+  cursor:default;
+}
+.tabs li a, .tabs li a:focus, .tabs li a:hover, 
+.tabs li span, .tabs li span:focus, .tabs li span:hover {
+  text-decoration:none;
+}
+.tabs li a:focus, .tabs li a:hover, 
+.tabs li span:focus, .tabs li span:hover {
+  color:#555;
+  outline:none;
+}
+.tabs li a.selected:focus, .tabs li a.selected:hover,
+.tabs li span.selected:focus, .tabs li span.selected:hover{
+  color:#fafafa;
+}
+.tabs li.label {
+border:none;
+font-weight:bold;
+line-height:1.25;
+margin-right:.25em;
+padding:.05em .13em .05em .13em;
+}
+
+
+
+/*
+     FILE ARCHIVED ON 01:21:42 Aug 14, 2014 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 18:31:14 Feb 01, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 136.767
+  exclusion.robots: 0.079
+  exclusion.robots.policy: 0.073
+  cdx.remote: 0.058
+  esindex: 0.007
+  LoadShardBlock: 112.516 (3)
+  PetaboxLoader3.datanode: 62.806 (4)
+  CDXLines.iter: 17.662 (3)
+  load_resource: 84.82
+  PetaboxLoader3.resolve: 47.463
+*/
