@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=us-ascii"/>
+	<meta name="author" content="Nikolay Mladenov"/>
+	<meta name="description" content="User javascripts for viewing nec2 models"/>
+	<meta name="keywords" content="antenna, model, chart, publishing"/>
+	<meta name="author" content="Nikolay Mladenov"/>
+	<link rel="shortcut icon" href="http://clients.teksavvy.com/~nickm/gh.ico"/>
+	<title>nikiml's Antenna pages - Nec Viewer</title>
+	<!-- Framework CSS -->
+<!--	<link rel="stylesheet" href="http://clients.teksavvy.com/~nickm/blueprint/all_screen.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="http://clients.teksavvy.com/~nickm/blueprint/print.css" type="text/css" media="print"/> -->
+	<link rel="stylesheet" href="http://randomvariations.github.io/nec/blueprint/all_screen.css" type="text/css" media="screen, projection"/>
+	<link rel="stylesheet" href="http://randomvariations.github.io/nec/blueprint/print.css" type="text/css" media="print"/>
+	<!--[if lt IE 8]><link rel="stylesheet" href="blueprint/ie.css" type="text/css" media="screen, projection"/><![endif]-->
+	<!--link rel="stylesheet" href="custom.css" type="text/css" media="screen, projection" /-->
+	<!--link rel="stylesheet" href="blueprint/tabs.css" type="text/css" media="screen"/-->
+
+
+</head>
+<body>
+	<div class="container">
+		<h1>NEC code viewer</h1><hr/>
+		<div class="span-4 menu box" id="menu"></div>
+		<div class="span-19 last">
+			<div class="span-19 last">
+				<ul class="tabs" id="tabs">
+					<li><a class="selected" id="nec_code_tab" href="javascript:showNecCode()">Nec code</a></li>
+					<li><a id="nec_model_tab" href="javascript:showNecModel()">Model</a></li>
+				</ul>
+				<div class="span-19 last" id="nec_code" style="height: 480px">
+					<textarea class="span-19" style="padding: 0px; margin: 0; height:98%; overflow: auto;">
+CM Paste your NEC code here and then click on the model tab above to view it.
+CM A permanent link for the displayed model is entered in the text field below.
+CM
+CM example nec code:  UHF only GH4 - from http://clients.teksavvy.com/~nickm/gh_u/gh4_13u4.html
+CM
+CE
+
+SY radius=0.003175
+SY narod_surf_spacing=0.006
+SY narod_spacing=0.012
+
+SY feed=0.0663335' 0.02, 0.07
+
+SY b=0.1228769' 0.075, 0.25
+SY a1=0.1411216' 0.07, 0.22
+SY _G3=0.06414115' 0.016, 0.1
+SY a2=a1+feed-_G3'this is to avoid self intersection since _G3 is to be &gt; radius+2.5mm
+SY a3=0.1219045' 0.07, 0.22
+
+
+
+SY x=-0.08413841' -0.11, -0.04
+SY g1=0.02564814' 0.002, 0.045
+SY g2=0.03972484' 0.002, 0.045
+SY l1=0.3035679' 0.1, 0.6
+SY l2=0.316555' 0.1, 0.65
+
+
+
+SY _top = a1+a1+feed-_G3+a3
+
+SY dz1=0.3268863' 0.05, 1
+SY z1 = dz1*_top
+SY dz2=0.7634931' 0.05, 1
+SY z2 = (dz1+dz2)*_top
+
+SY ay1=feed+a1
+SY ay2=feed+a1-a2
+SY ay3=feed+a1-a2+a3
+SY ay4=feed+a1-a2+a3+b
+SY az2=a1+a2
+SY az3=a1+a2+a3
+
+
+GW 1 11 0 feed 0 0 ay1 a1 radius '#00f
+GW 2 11 0 ay1 a1 0 ay2 az2 radius '#00f
+GW 3 9 0 ay2 az2 0 ay3 az3 radius '#00f
+GW 4 7 0 ay3 az3 0 ay4 az3 radius '#00f
+GW 5 16 x g1 z1 x l1+g1 z1 radius '#0f0
+GW 6 17 x g2 z2 x l2+g2 z2 radius '#0f0
+GX	20	010
+GX	40	001
+GW 100 9 0 -feed 0 0 feed 0 radius*.8675 '#f40
+GE	0
+LD	5	0	0	0	24900000
+GN	-1
+EK
+EX 0 100 5 0 1
+FR	0	0	0	0	800	0
+EN
+					</textarea>
+				</div>
+				<div class="span-19 last" id="nec_model" style="height: 480px;"></div>
+				<div class="span-19 last"><a id="linklink" href="javascript:void(0);" title="Opens in a new window">Link: </a>
+					<div class="span-19"><input style="width:100%" type="text" id="linktext"/></div>
+				</div>
+				<div class="span-19 last"><a id="inlinelinklink" href="javascript:void(0);" title="Opens in a new window">Link that will be displayed inline on DHC: </a>
+					<div class="span-19"><input style="width:100%" type="text" id="inlinelinktext"/></div>
+				</div>
+			</div>
+			<hr/>
+			<div class="span-19 last">
+				<a name="forums"></a>
+				<h2>Forums support</h2>
+				<p>
+					There is a user script for most browsers that allows nec models posted on digitalhome.ca forums to be viewed inline.
+					The script simply searaches for code blocks containing valid nec code and inserts a small frame that displays the model.
+					There are few installation variants:
+				</p>
+				<ol>
+					<li><a href="viewer/nec_viewer2/nec2_code_viewer2.user.js" onclick="_gaq.push(['_trackPageview', '/~nickm/viewer/nec_viewer2/nec2_code_viewer2.user.js']);">user script</a> for Firefox with <a href="https://web.archive.org/web/20190725155505/https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Greasemonkey</a> and IE8,9 with <a href="https://web.archive.org/web/20190725155505/http://web.archive.org/web/20120328100016/http://www.bhelpuri.net/Trixie/">Trixie</a>, and </li>
+					<li><a href="viewer/nec_viewer2/nec_viewer2-1.6.crx" onclick="_gaq.push(['_trackPageview', '/~nickm/nec_viewer2/nec_viewer2-1.6.crx']);">another one</a> for Chrome users. </li>
+					<li>Safari users may try to install the Firefox user script as described <a href="https://web.archive.org/web/20190725155505/http://www.simplehelp.net/2007/11/14/how-to-run-greasemonkey-scripts-in-safari/">here</a></li>
+					<li>On IE10 (and may be other browsers) one can use the demo bookmarklet below. Just add it to you bookmarks toolbar and press it whenever you have a model you want to see.</li>
+				</ol>
+				<p> The actual nec to model conversion happens when you click on the model link, so the overall process does not  slow the page load!</p>
+				<p>A demo of this functionality can be observed by pressing on this <a onclick="_gaq.push(['_trackPageview', '/~nickm/viewer/nec_viewer2/bookmarklet']);" href="javascript:(function(){var%20e=document.createElement(&quot;script&quot;),t=&quot;setAttribute&quot;;e[t](&quot;type&quot;,&quot;text/javascript&quot;),e[t](&quot;src&quot;,&quot;https://web.archive.org/web/20190725155505/http://clients.teksavvy.com/~nickm/viewer/nec2_code_viewer2-min-1.6.js&quot;),document.getElementsByTagName(&quot;head&quot;)[0].appendChild(e)})()">bookmarklet</a>.
+					As a result of it, a models section wiil be added to the nec code.
+				</p>
+				<div>
+					<div>Code:</div>
+					<pre class="box" style="margin: 0px; padding: 6px; border: 1px inset; width: 640px; height: 498px; text-align: left; overflow: auto; display: block;" dir="ltr">CE
+SY aradius=0.003175
+SY rradius=0.003175
+SY fradius=aradius
+
+SY feed=0.066219' 0.02, 0.2
+
+SY b=0.1442197' 0.05, 0.75
+SY a1y=0.1385343' 0.05, 0.7
+SY a1z=0.1860493' 0.05, 0.6
+SY gap=0.02512351' 0.025, 0.3
+SY a2y=a1y+feed-gap'this is to avoid self intersection since gap is to be &gt; radius+2.5mm
+SY a2z=0.1362141' 0.05, 0.6
+SY a3y=0.489115' 0.05, 0.6
+SY a3z=0.05699361' 0.05, 0.6
+
+SY x=-0.06365954' -0.4, -0.05
+SY _g1=-0.02006255' -0.045, 0.045
+SY _g2=0.01748137' -0.045, 0.045
+SY _g3=-0.03600042' -0.045, 0.045
+SY g1= max(0, _g1)
+SY g2= max(0, _g2)
+SY g3= max(0, _g3)
+SY l1=0.6979379' 0.1, 0.7
+SY l2=0.3311583' 0.1, 0.7
+SY l3=0.2311463' 0.1, 0.7
+SY rwidth = max(l2+g2, max(l1+g1, l3+g3))
+
+SY dz1=0.04561453' 0.02, 0.4
+SY dz2=0.1231853' 0.02, 0.4
+SY dz3=0.1546767' 0.02, 0.4
+
+SY z1 = dz1
+SY z2 = z1+dz2
+SY z3 = z2+dz3
+
+
+SY ay1=feed+a1y
+SY ay2=feed+a1y-a2y
+SY ay3=feed+a1y-a2y+a3y
+SY ay4=feed+a1y-a2y+a3y+b
+SY az1=a1z
+SY az2=a1z+a2z
+SY az3=a1z+a2z+a3z
+
+SY width = max(rwidth, max(ay4,ay1))
+SY height = max(z3, az3)
+
+
+GW 1 5 0 feed 0 0 ay1 az1 aradius'#00f
+GW 2 5 0 ay1 az1 0 ay2 az2 aradius'#00f
+GW 3 10 0 ay2 az2 0 ay3 az3 aradius'#00f
+GW 4 3 0 ay3 az3 0 ay4 az3 aradius'#00f
+GW 5 14 x g1 z1 x g1+l1 z1 rradius'#0f0
+GW 6 7 x g2 z2 x g2+l2 z2 rradius'#0f0
+GW 7 5 x g3 z3 x g3+l3 z3 rradius'#0f0
+GX	20	010
+GX	40	001
+GW 100 5 0 -feed 0 0 feed 0 fradius'#f40
+GE	0
+LD	5	0	0	0	24900000
+GN	-1
+EK
+EX 0 100 3 0 1
+FR	0	0	0	0	300	0
+EN
+
+					</pre>
+				</div>
+			</div>
+			<hr/>
+			<div>
+				<a name="limitations" id="limitations"></a>
+				<h2>Limitations</h2>
+				<p>There are some minor limitations on the nec2 code that can be converted: </p>
+				<ul>
+				<li>TL cards and NT cards have no visualization</li>
+				</ul>
+			</div>
+			<div class="span-19 last">
+				<a name="license" id="license"></a>
+				<h2>License</h2>
+				<p> This website uses the  javascript libraries <a href="http://raphaeljs.com/">Raphael</a>, <a href="http://sylvester.jcoglan.com/">Sylvester</a> and <a href="http://jsep.from.so/">JSEP</a> which are covered by MIT license.</p>
+				<p>All other sources from this website can be used under the <a href="http://www.gnu.org/licenses/gpl.txt">GPL v3</a>.</p>
+			</div>
+		</div>
+		<hr/>
+		<div class="span-18">
+			<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" height="31" width="88"/></a></p>
+		</div>
+		<div class="span-6 last">
+			<p> Copyright 2013 Nikolay Mladenov.<br/> nikolay dot mladenov at gmail dot com</p>
+		</div>
+	</div>
+	<script src="http://clients.teksavvy.com/~nickm/js/js/menu.js" type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript" charset="utf-8">
+		document.getElementById("nec_model").style.display = "none";
+		createMenu("nec_viewer", "./"); 
+		NecViewer = {code:"",embeded:1}
+	</script>
+<!--	<script src="http://clients.teksavvy.com/~nickm/js/jsep.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://clients.teksavvy.com/~nickm/js/array-augment-min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://clients.teksavvy.com/~nickm/js/nec2_code_viewer2.js" type="text/javascript" charset="utf-8"></script> -->
+	<script src="http://randomvariations.github.io/nec/js/jsep.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://randomvariations.github.io/nec/js/array-augment-min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://randomvariations.github.io/nec/js/nec2_code_viewer2.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+		NecViewer.embeded = 0;
+		var showNecCode = function() 
+		{
+			var nec_code_div = document.getElementById("nec_code")
+				, nec_model_div = document.getElementById("nec_model")
+				, nec_code_tab = document.getElementById("nec_code_tab")
+				, nec_model_tab = document.getElementById("nec_model_tab")
+				;
+
+			nec_code_div.style.display = "block";
+			nec_model_div.style.display = "none";
+			nec_code_tab.className = "selected";
+			nec_model_tab.className = "";
+		}
+		var showNecModel = function() 
+		{
+			var nec_code_div = document.getElementById("nec_code")
+				, nec_model_div = document.getElementById("nec_model")
+				, nec_code_tab = document.getElementById("nec_code_tab")
+				, nec_model_tab = document.getElementById("nec_model_tab")
+				, code = nec_code_div.getElementsByTagName("textarea")[0].value + ""
+				, link, linktext = document.getElementById("linktext")
+				, linklink = document.getElementById("linklink")
+				, inlinelinktext = document.getElementById("inlinelinktext")
+				, inlinelinklink = document.getElementById("inlinelinklink")
+				;
+
+			if (NecViewer.code != code) {
+				NecViewer.code = code;
+				link = NecViewer.extractNecGeometry(code);
+				nec_model_div.innerHTML = '<object data="' + link + '" style="height:100%; width:100%;"></object>';
+				linktext.value = link;
+				linklink.href = link;
+				linklink.setAttribute("target", "_blank");
+				link = link.replace("_g2.html", "g2.html");
+				inlinelinktext.value = link;
+				inlinelinklink.href = link;
+				inlinelinklink.setAttribute("target", "_blank");
+			}
+			linktext.select();
+			nec_model_div.style.display = "block";
+			nec_code_div.style.display = "none";
+			nec_model_tab.className = "selected";
+			nec_code_tab.className = "";
+		}
+	</script>
+</body>
+</html>
