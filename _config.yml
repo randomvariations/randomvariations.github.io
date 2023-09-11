@@ -1,2 +1,5 @@
 include:
-  - nec/viewer/_g2.html
+  - _*
+  - _*.html
+
+exclude:
